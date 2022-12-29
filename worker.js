@@ -42,7 +42,7 @@ async function main() {
 }
 
 
-await main()
+main()
 
 let current;
 
