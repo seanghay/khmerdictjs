@@ -1,5 +1,7 @@
 import { BlobReader, TextWriter, ZipReader } from "@zip.js/zip.js";
-const dbUrl = 'https://cdn.jsdelivr.net/gh/seanghay/khmerdictjs@main/assets/db.json.zip';
+import dbUrl from './assets/db.json.zip';
+// const dbUrl = 'https://cdn.jsdelivr.net/gh/seanghay/khmerdictjs@main/assets/db.json.zip';
+
 import MiniSearch from 'minisearch'
 
 let _minisearch;

@@ -16,8 +16,6 @@ const worker = new Worker(new URL("./worker.js", import.meta.url), {
 })
 
 
-
-
 worker.addEventListener('message', (msg) => {
 
   if (typeof msg.data === 'object' && msg.data.progress) {
