@@ -12,6 +12,8 @@
     "vite": "^4.0.0"
   },
   "dependencies": {
-    "@zip.js/zip.js": "^2.6.61"
+    "@zip.js/zip.js": "^2.6.61",
+    "fuse.js": "^6.6.2",
+    "lodash.debounce": "^4.0.8"
   }
 }
