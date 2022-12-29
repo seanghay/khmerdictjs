@@ -63,12 +63,16 @@ async function main() {
     console.time('parse')
     const items = JSON.parse(json).map((item, id) => ({ ...item, id }));
     _words = items;
+    
+    postMessage({
+      sampleItems: createSampleItems(items),
+    })
 
     console.timeEnd('parse');
     console.log(items.length);
 
     console.time('index')
-    
+
     percent3 += 33.33 / 2;
     totalProgress()
 
@@ -83,11 +87,11 @@ async function main() {
     minisearch.addAll(items);
     console.timeEnd('index')
     _minisearch = minisearch;
-  
+
     postMessage("READY")
     percent3 += 33.33 / 2;
     totalProgress()
-  
+
   }
 }
 
@@ -95,6 +99,13 @@ main()
 
 addEventListener('message', (msg) => {
   if (!_minisearch) return
+  if (!msg.data && _words && _words.length > 0) {
+    postMessage({
+      sampleItems: createSampleItems(_words)
+    })
+    
+  }
+
   const t = performance.now();
   const results = _minisearch.search(msg.data).slice(0, 100);
   const data = results.map(it => _words[it.id])
@@ -102,4 +113,19 @@ addEventListener('message', (msg) => {
     time: performance.now() - t,
     data,
   });
+
 })
+
+
+function randomInteger(min, max) {
+  return Math.floor(min + Math.random() * (max - min))
+}
+
+function createSampleItems(items = []) {
+  const indexes = new Set();
+  for (let i = 0; i < 5; i++) {
+    const index = randomInteger(0, items.length - 1)    
+    indexes.add(index)
+  }
+  return [...indexes].map(i => items[i]);
+}

@@ -7,7 +7,6 @@
 		<meta name="description" content="Fast and offline Khmer dictionary" />
 		<title>Khmer Dictionary</title>
 
-
 		<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
 		<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
 		<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
@@ -141,6 +140,33 @@
 				font-size: 22px;
 				margin: 0.4em 0;
 			}
+
+			#sample-list {
+				display: flex;
+				gap: 0.2em;
+				padding: .6em 0;
+				display: none;
+				flex-wrap: wrap;
+			}
+
+			.button-word-suggest {
+				all: unset;
+				background-color: rgba(0, 0, 0, 0.1);
+				border: 2px solid rgba(255, 255, 255, 0.2);
+				color: white;
+				padding: 0.2em 0.6em;
+				font-weight: bold;
+				font-size: 14px;
+				border-radius: 0.6em;
+				transition: 0.2s ease;
+			}
+
+			.button-word-suggest:hover {
+				background-color: rgba(0, 0, 0, 0.15);
+			}
+			.button-word-suggest:active {
+				background-color: rgba(0, 0, 0, 0.1);
+			}
 		</style>
 	</head>
 	<body>
@@ -148,6 +174,8 @@
 			<h1>Khmer Dictionary</h1>
 			<input disabled type="text" id="search" placeholder="Search" />
 			<div id="progress-container"></div>
+			<div id="sample-list"></div>
+
 			<ul id="result"></ul>
 		</div>
 		<script type="module" src="/main.js"></script>

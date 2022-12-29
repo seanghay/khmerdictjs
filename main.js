@@ -2,6 +2,7 @@ import './main.css'
 import debounce from 'lodash.debounce'
 import ProgressBar from 'progressbar.js'
 
+const sampleListElement = document.querySelector('#sample-list');
 const searchElement = document.querySelector('#search');
 const resultElement = document.querySelector('#result');
 const progressContainerElement = document.querySelector('#progress-container');
@@ -15,8 +16,28 @@ const worker = new Worker(new URL("./worker.js", import.meta.url), {
   type: "module"
 })
 
-
 worker.addEventListener('message', (msg) => {
+
+  if (typeof msg.data === 'object' && msg.data.sampleItems) {
+    const samples = msg.data.sampleItems;
+    sampleListElement.innerHTML = '';
+    for (const sample of samples) {
+      if (!sample.main) {
+        continue;
+      }
+
+      const button = document.createElement('button');
+      button.textContent = sample.main;
+
+      button.classList.add('button-word-suggest')
+      button.addEventListener('click', () => {
+        searchElement.value = sample.main;
+        triggerSearch(sample.main)
+      })
+      sampleListElement.appendChild(button)
+    }
+    return;
+  }
 
   if (typeof msg.data === 'object' && msg.data.progress) {
     //progressElement.value = msg.data.progress;
@@ -26,7 +47,7 @@ worker.addEventListener('message', (msg) => {
 
   if (msg.data === "READY") {
     console.log('ready')
-
+    sampleListElement.style.display = 'flex'
     progressContainerElement.style.display = 'none';
     searchElement.disabled = false;
     return
@@ -37,9 +58,11 @@ worker.addEventListener('message', (msg) => {
 
   if (data.length === 0) {
     resultElement.innerHTML = 'Empty'
+    sampleListElement.style.display = 'flex'
     return;
   }
 
+  sampleListElement.style.display = 'none'
   resultElement.innerHTML = `<p>${millis} វិនាទី, រកឃើញ ${data.length} ពាក្យ</p>` + data.map((item) => {
     return `<li><strong class="word">${item.subword || item.main || ""}<span class="pos">${item.part_of_speech || "មិនមាន"}</span></strong><p>${item.definition}</p> <p class="example">${item.example || ""}</p></li>`;
   }).join('')
@@ -48,5 +71,11 @@ worker.addEventListener('message', (msg) => {
 
 searchElement.addEventListener('input', debounce(() => {
   const text = searchElement.value;
-  worker.postMessage(text);
+  triggerSearch(text)
 }, 10))
+
+
+
+function triggerSearch(v) {
+  worker.postMessage(v);
+}
