@@ -41,7 +41,7 @@ async function main() {
     searchElement.disabled = false;
     
     searchElement.addEventListener('input', debounce(() => {
-      const result = fuse.search(searchElement.value, { limit: 100 }).filter(it => it.item.main)
+      const result = fuse.search(searchElement.value, { limit: 10 }).filter(it => it.item.main)
       
       resultElement.innerHTML = result.map(({ item }) => {
         return `<li><strong class="word">${item.subword || item.main}<span class="pos">${item.part_of_speech || "មិនមាន"}</span></strong><p>${item.definition}</p> <p class="example">${item.example || ""}</p></li>`;
