@@ -1,9 +1,9 @@
 import { BlobReader, TextWriter, ZipReader } from "@zip.js/zip.js";
 import dbUrl from './assets/db.json.zip';
-import Fuse from 'fuse.js';
-import debounce from 'lodash.debounce'
+import MiniSearch from 'minisearch'
 
-let fuse
+let _minisearch;
+let _words = [];
 
 async function main() {
   console.time('download');
@@ -16,52 +16,39 @@ async function main() {
 
   for (const entry of entries) {
     console.time('decompress')
-
-    const json = await entry.getData(new TextWriter(), {
-      onprogress: (progress, total) => {
-        console.log(`decompress: ${Math.round((progress / total) * 10000) / 100}%`)
-      }
-    })
-
+    const json = await entry.getData(new TextWriter())
     console.timeEnd('decompress')
     console.time('parse')
-    const items = JSON.parse(json);
+    const items = JSON.parse(json).map((item, id) => ({ ...item, id }));
+    _words = items;
+
     console.timeEnd('parse');
     console.log(items.length);
 
-    fuse = new Fuse(items, {
-      keys: [
-        "main",
-        "definition",
-        "example"
-      ]
+    console.time('index')
+    const minisearch = new MiniSearch({
+      fields: ['main', 'definition', 'example'],
+      searchOptions: {
+        boost: { main: 2 },
+      }
     })
 
+    minisearch.addAll(items);
+    console.timeEnd('index')
+    _minisearch = minisearch;
     postMessage("READY")
   }
 }
 
-
 main()
 
-let current;
-
 addEventListener('message', (msg) => {
-  if (!fuse) return
-
-  if (typeof current === 'number') {
-    clearTimeout(current)
-    console.log('clear', current)
-  }
-
-  current = setTimeout(() => {
-    const t = performance.now();
-    const data = fuse.search(msg.data, { limit: 20 });
-    postMessage({
-      time: performance.now() - t,
-      data,
-    });
-  })
-
-
+  if (!_minisearch) return
+  const t = performance.now();
+  const results = _minisearch.search(msg.data).slice(0, 100);
+  const data = results.map(it => _words[it.id])
+  postMessage({
+    time: performance.now() - t,
+    data,
+  });
 })

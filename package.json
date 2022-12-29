@@ -13,7 +13,9 @@
   },
   "dependencies": {
     "@zip.js/zip.js": "^2.6.61",
+    "flexsearch": "^0.7.31",
     "fuse.js": "^6.6.2",
-    "lodash.debounce": "^4.0.8"
+    "lodash.debounce": "^4.0.8",
+    "minisearch": "^6.0.0"
   }
 }
