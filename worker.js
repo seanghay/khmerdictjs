@@ -27,9 +27,9 @@ async function main() {
 
     console.time('index')
     const minisearch = new MiniSearch({
-      fields: ['main', 'definition', 'example'],
+      fields: ['main', 'subword', 'definition', 'example'],
       searchOptions: {
-        boost: { main: 2 },
+        boost: { main: 2, subword: 2 },
         fuzzy: .3
       }
     })
