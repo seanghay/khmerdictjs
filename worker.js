@@ -102,10 +102,9 @@ addEventListener('message', (msg) => {
   if (!msg.data && _words && _words.length > 0) {
     postMessage({
       sampleItems: createSampleItems(_words)
-    })
-    
+    }) 
   }
-
+  
   const t = performance.now();
   const results = _minisearch.search(msg.data).slice(0, 100);
   const data = results.map(it => _words[it.id])
