@@ -38,7 +38,8 @@ async function main() {
 
     const searchElement = document.querySelector('#search');
     const resultElement = document.querySelector('#result');
-
+    searchElement.disabled = false;
+    
     searchElement.addEventListener('input', debounce(() => {
       const result = fuse.search(searchElement.value, { limit: 100 }).filter(it => it.item.main)
       

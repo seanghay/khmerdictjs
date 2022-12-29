@@ -19,7 +19,6 @@
 				color: white;
 				font-family: "Kantumruy Pro", sans-serif;
 				line-height: 24px;
-				
 			}
 
 			body {
@@ -34,16 +33,24 @@
 
 			input {
 				font-family: inherit;
-				padding: .4em .8em;
-				border-radius: .2em;
+				padding: 0.4em 0.8em;
+				border-radius: 0.4em;
 				background-color: white;
-				border: 1px solid rgba(255, 255, 255, 0.8);
+				border: 2px solid rgba(255, 255, 255, 0.8);
 				font-size: 1.4em;
 			}
 
+			input:disabled {
+				background-color: rgba(255, 255, 255, 0.2);
+				border: 2px solid rgba(255, 255, 255, 0.2);
+			}
+
+			input:disabled::placeholder {
+				color: rgba(255, 255, 255, 0.2);
+			}
 
 			.example {
-				color: rgba(255,255,255, .6);
+				color: rgba(255, 255, 255, 0.6);
 				margin: 1em;
 			}
 
@@ -57,25 +64,24 @@
 			}
 
 			li {
-				border-radius: .8em;
-				margin: .4em 0;
-				padding: .4em 1em;
-				transition: .2s ease;
-				background-color: rgba(255, 255,255, .1);
-				border: 2px solid rgba(255, 255,255, .1);
+				border-radius: 0.8em;
+				margin: 0.4em 0;
+				padding: 0.4em 1em;
+				transition: 0.2s ease;
+				background-color: rgba(255, 255, 255, 0.1);
+				border: 2px solid rgba(255, 255, 255, 0.1);
 			}
 
 			li:hover {
-				background-color: rgba(255, 255,255, .2);
-				border: 2px solid rgba(255, 255,255, .2);
-
+				background-color: rgba(255, 255, 255, 0.2);
+				border: 2px solid rgba(255, 255, 255, 0.2);
 			}
 
 			.pos {
 				display: inline-block;
-				padding: 0 .2em;
-				margin: 0 .4em;
-				border-radius: .2em;
+				padding: 0 0.2em;
+				margin: 0 0.4em;
+				border-radius: 0.2em;
 				background-color: orange;
 				color: slategray;
 				font-weight: bold;
@@ -85,14 +91,14 @@
 			.word {
 				display: block;
 				font-size: 22px;
-				margin: .4em 0;
+				margin: 0.4em 0;
 			}
 		</style>
 	</head>
 	<body>
 		<div id="app">
 			<h1>Khmer Dictionary</h1>
-			<input type="text" id="search" placeholder="Search" />
+			<input disabled type="text" id="search" placeholder="Search" />
 			<ul id="result"></ul>
 		</div>
 		<script type="module" src="/main.js"></script>
