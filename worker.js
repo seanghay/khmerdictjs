@@ -30,6 +30,7 @@ async function main() {
       fields: ['main', 'definition', 'example'],
       searchOptions: {
         boost: { main: 2 },
+        fuzzy: .3
       }
     })
 
