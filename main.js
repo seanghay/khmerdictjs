@@ -57,7 +57,7 @@ worker.addEventListener('message', (msg) => {
   const millis = Math.round((time * 10000) / 1000) / 10000;
 
   if (data.length === 0) {
-    resultElement.innerHTML = 'Empty'
+    resultElement.innerHTML = '<p class="empty">រកមិនឃើញ</p>'
     sampleListElement.style.display = 'flex'
     return;
   }

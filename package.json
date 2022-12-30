@@ -13,8 +13,11 @@
   },
   "dependencies": {
     "@zip.js/zip.js": "^2.6.61",
+    "adm-zip": "^0.5.10",
+    "better-sqlite3": "^8.0.1",
     "flexsearch": "^0.7.31",
     "fuse.js": "^6.6.2",
+    "knex": "^2.3.0",
     "lodash.debounce": "^4.0.8",
     "minisearch": "^6.0.0",
     "progressbar.js": "^1.1.0",

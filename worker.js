@@ -122,7 +122,7 @@ function randomInteger(min, max) {
 
 function createSampleItems(items = []) {
   const indexes = new Set();
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 10; i++) {
     const index = randomInteger(0, items.length - 1)    
     indexes.add(index)
   }
