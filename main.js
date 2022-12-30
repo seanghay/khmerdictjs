@@ -1,6 +1,7 @@
 import './main.css'
 import debounce from 'lodash.debounce'
 import ProgressBar from 'progressbar.js'
+import { toKhmer } from 'khmernumber';
 
 const sampleListElement = document.querySelector('#sample-list');
 const searchElement = document.querySelector('#search');
@@ -8,8 +9,8 @@ const resultElement = document.querySelector('#result');
 const progressContainerElement = document.querySelector('#progress-container');
 
 const line = new ProgressBar.Line(progressContainerElement, {
-  color: 'white',
-  strokeWidth: 1
+  color: 'rgba(255,255,255,.6)',
+  strokeWidth: 1,
 })
 
 const worker = new Worker(new URL("./worker.js", import.meta.url), {
@@ -63,8 +64,16 @@ worker.addEventListener('message', (msg) => {
   }
 
   sampleListElement.style.display = 'none'
+  const createPOS = (item) => {
+    if (!item.part_of_speech) {
+      return ''
+    }
+
+    return `<span class="pos">${item.part_of_speech || ""}</span>`
+  }
+
   resultElement.innerHTML = `<p>${millis} វិនាទី, រកឃើញ ${data.length} ពាក្យ</p>` + data.map((item) => {
-    return `<li><strong class="word">${item.subword || item.main || ""}<span class="pos">${item.part_of_speech || "មិនមាន"}</span></strong><p>${item.definition}</p> <p class="example">${item.example || ""}</p></li>`;
+    return `<li><strong class="word">${item.subword || item.main || ""}${createPOS(item)}</strong><p>${item.definition}</p> <p class="example">${item.example || ""}</p></li>`;
   }).join('')
 
 })
