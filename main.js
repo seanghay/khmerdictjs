@@ -21,27 +21,26 @@ const worker = new Worker(new URL("./worker.js", import.meta.url), {
 
 worker.addEventListener('message', (msg) => {
 
-  if (typeof msg.data === 'object' && msg.data.sampleItems) {
-    const samples = msg.data.sampleItems;
+  const handleSamples = samples => {
     sampleListElement.innerHTML = '';
-    if (searchElement.value) {
-      return
-    }
-    for (const sample of samples) {
-      if (!sample.main) {
-        continue;
-      }
 
+  
+    for (const sample of samples) {
       const button = document.createElement('button');
-      button.textContent = sample.main;
+      button.textContent = sample;
       button.classList.add('button-word-suggest')
       button.addEventListener('click', () => {
-        searchElement.value = sample.main;
-        triggerSearch(sample.main)
-        updateQuery(sample.main)
+        searchElement.value = sample;
+        triggerSearch(sample)
+        updateQuery(sample)
       })
+    
       sampleListElement.appendChild(button)
     }
+  }
+
+  if (typeof msg.data === 'object' && msg.data.sampleItems) {
+    handleSamples(msg.data.sampleItems)
     return;
   }
 
@@ -63,8 +62,12 @@ worker.addEventListener('message', (msg) => {
     return
   }
 
-  const { data, time } = msg.data;
+  const { data, time, suggests } = msg.data;
   const millis = Math.round((time * 10000) / 1000) / 10000;
+  if (suggests && suggests.length) {
+    handleSamples(suggests)
+
+  }
 
   if (data.length === 0) {
     resultElement.innerHTML = '<p class="empty">រកមិនឃើញ</p>'
@@ -72,7 +75,7 @@ worker.addEventListener('message', (msg) => {
     return;
   }
 
-  sampleListElement.style.display = 'none'
+  sampleListElement.style.display = 'flex'
   const createPOS = (item) => {
     if (!item.part_of_speech) {
       return ''
@@ -115,6 +118,6 @@ function updateQuery(q) {
 
 function getQuery() {
   const url = new URL(window.location);
-  if  (!url.pathname || url.pathname === "/") return "";
+  if (!url.pathname || url.pathname === "/") return "";
   return decodeURIComponent(url.pathname.slice(1))
 }

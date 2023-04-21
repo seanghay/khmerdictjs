@@ -34,7 +34,7 @@ async function main() {
   let percent3 = 0;
 
   const totalProgress = () => {
-    postMessage({ 
+    postMessage({
       progress: percent1 + percent2 + percent3
     });
   }
@@ -63,7 +63,7 @@ async function main() {
     console.time('parse')
     const items = JSON.parse(json).map((item, id) => ({ ...item, id }));
     _words = items;
-    
+
     postMessage({
       sampleItems: createSampleItems(items),
     })
@@ -102,15 +102,23 @@ addEventListener('message', (msg) => {
   if (!msg.data && _words && _words.length > 0) {
     postMessage({
       sampleItems: createSampleItems(_words)
-    }) 
+    })
   }
-  
+
   const t = performance.now();
+  const suggests = _minisearch.autoSuggest(msg.data, {
+    boost: { main: 2, subword: 2 },
+    fuzzy: .3,
+    fields: ["main", "subword"],
+  }).slice(0, 11)
+
   const results = _minisearch.search(msg.data).slice(0, 100);
   const data = results.map(it => _words[it.id])
+
   postMessage({
     time: performance.now() - t,
     data,
+    suggests: [...new Set(suggests.flatMap(i => i.terms))].slice(1)
   });
 
 })
@@ -122,9 +130,11 @@ function randomInteger(min, max) {
 
 function createSampleItems(items = []) {
   const indexes = new Set();
+
   for (let i = 0; i < 10; i++) {
-    const index = randomInteger(0, items.length - 1)    
+    const index = randomInteger(0, items.length - 1)
     indexes.add(index)
   }
-  return [...indexes].map(i => items[i]);
+
+  return [...indexes].map(i => items[i].main).filter(Boolean);
 }
