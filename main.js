@@ -9,9 +9,9 @@ const progressContainerElement = document.querySelector('#progress-container');
 
 const line = new ProgressBar.Line(progressContainerElement, {
   color: 'rgba(255,255,255,.6)',
-  strokeWidth: 1,
-  trailWidth: 1,
-  trailColor: "rgba(255,255,255,.1)",
+  strokeWidth: 2,
+  trailWidth: 2,
+  trailColor: "rgba(255,255,255, .1)",
   easing: 'easeInOut',
 })
 
@@ -24,6 +24,9 @@ worker.addEventListener('message', (msg) => {
   if (typeof msg.data === 'object' && msg.data.sampleItems) {
     const samples = msg.data.sampleItems;
     sampleListElement.innerHTML = '';
+    if (searchElement.value) {
+      return
+    }
     for (const sample of samples) {
       if (!sample.main) {
         continue;
@@ -35,6 +38,7 @@ worker.addEventListener('message', (msg) => {
       button.addEventListener('click', () => {
         searchElement.value = sample.main;
         triggerSearch(sample.main)
+        updateQuery(sample.main)
       })
       sampleListElement.appendChild(button)
     }
@@ -53,6 +57,9 @@ worker.addEventListener('message', (msg) => {
     searchElement.disabled = false;
     searchElement.style.display = 'block';
 
+    if (searchElement.value) {
+      triggerSearch(searchElement.value)
+    }
     return
   }
 
@@ -70,22 +77,44 @@ worker.addEventListener('message', (msg) => {
     if (!item.part_of_speech) {
       return ''
     }
-
     return `<span class="pos">${item.part_of_speech || ""}</span>`
   }
 
   resultElement.innerHTML = `<p class="stats">${millis} វិនាទី, រកឃើញ ${data.length} ពាក្យ</p>` + data.map((item) => {
     const el = item.example ? `<p class="example">${item.example || ""}</p>` : ""
-    return `<li><strong class="word">${item.subword || item.main || ""}${createPOS(item)}</strong><p>${item.definition}</p>${el}</li>`;
+    const noteEl = item.notes ? `<p class="pronunciation">ចំណាំ៖ <span class="white">${item.notes}</span></p>` : ''
+    return `
+      <li>
+        <strong class="word">${item.subword || item.main || ""}${createPOS(item)}</strong>
+        <p>${item.definition}</p>
+        ${el}
+        ${noteEl}
+        <p class="pronunciation">អានថា៖ <span class="white">${item.pronunciation}</span></p>
+      </li>
+    `;
   }).join('')
 
-})
+});
 
+searchElement.value = getQuery()
 searchElement.addEventListener('input', debounce(() => {
   const text = searchElement.value;
   triggerSearch(text)
-}, 10))
+  updateQuery(text)
+}, 10));
 
 function triggerSearch(v) {
   worker.postMessage(v);
+}
+
+function updateQuery(q) {
+  const url = new URL(window.location);
+  url.pathname = q;
+  window.history.pushState(null, '', url.toString());
+}
+
+function getQuery() {
+  const url = new URL(window.location);
+  if  (!url.pathname || url.pathname === "/") return "";
+  return decodeURIComponent(url.pathname.slice(1))
 }

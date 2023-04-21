@@ -34,7 +34,9 @@ async function main() {
   let percent3 = 0;
 
   const totalProgress = () => {
-    postMessage({ progress: percent1 + percent2 + percent3 });
+    postMessage({ 
+      progress: percent1 + percent2 + percent3
+    });
   }
 
   console.time('download');
@@ -75,7 +77,7 @@ async function main() {
     totalProgress()
 
     const minisearch = new MiniSearch({
-      fields: ['main', 'subword', 'definition', 'example'],
+      fields: ['main', 'subword', 'definition', 'example', 'pronunciation'],
       searchOptions: {
         boost: { main: 2, subword: 2 },
         fuzzy: .3

@@ -1,3 +1,14 @@
 #progress-container {
-  padding: .4em;
+  padding: 0;
 }
+
+.pronunciation {
+  color: rgba(255, 255, 255, .6);
+  font-size: .85em;
+  font-weight: 600;
+}
+
+.pronunciation .white {
+  color: white;
+}
+
