@@ -1,7 +1,6 @@
 import './main.css'
 import debounce from 'lodash.debounce'
 import ProgressBar from 'progressbar.js'
-import { toKhmer } from 'khmernumber';
 
 const sampleListElement = document.querySelector('#sample-list');
 const searchElement = document.querySelector('#search');
@@ -11,6 +10,9 @@ const progressContainerElement = document.querySelector('#progress-container');
 const line = new ProgressBar.Line(progressContainerElement, {
   color: 'rgba(255,255,255,.6)',
   strokeWidth: 1,
+  trailWidth: 1,
+  trailColor: "rgba(255,255,255,.1)",
+  easing: 'easeInOut',
 })
 
 const worker = new Worker(new URL("./worker.js", import.meta.url), {
@@ -29,7 +31,6 @@ worker.addEventListener('message', (msg) => {
 
       const button = document.createElement('button');
       button.textContent = sample.main;
-
       button.classList.add('button-word-suggest')
       button.addEventListener('click', () => {
         searchElement.value = sample.main;
@@ -41,7 +42,6 @@ worker.addEventListener('message', (msg) => {
   }
 
   if (typeof msg.data === 'object' && msg.data.progress) {
-    //progressElement.value = msg.data.progress;
     line.animate(msg.data.progress / 100)
     return;
   }
@@ -51,6 +51,8 @@ worker.addEventListener('message', (msg) => {
     sampleListElement.style.display = 'flex'
     progressContainerElement.style.display = 'none';
     searchElement.disabled = false;
+    searchElement.style.display = 'block';
+
     return
   }
 
@@ -72,8 +74,9 @@ worker.addEventListener('message', (msg) => {
     return `<span class="pos">${item.part_of_speech || ""}</span>`
   }
 
-  resultElement.innerHTML = `<p>${millis} វិនាទី, រកឃើញ ${data.length} ពាក្យ</p>` + data.map((item) => {
-    return `<li><strong class="word">${item.subword || item.main || ""}${createPOS(item)}</strong><p>${item.definition}</p> <p class="example">${item.example || ""}</p></li>`;
+  resultElement.innerHTML = `<p class="stats">${millis} វិនាទី, រកឃើញ ${data.length} ពាក្យ</p>` + data.map((item) => {
+    const el = item.example ? `<p class="example">${item.example || ""}</p>` : ""
+    return `<li><strong class="word">${item.subword || item.main || ""}${createPOS(item)}</strong><p>${item.definition}</p>${el}</li>`;
   }).join('')
 
 })
@@ -82,8 +85,6 @@ searchElement.addEventListener('input', debounce(() => {
   const text = searchElement.value;
   triggerSearch(text)
 }, 10))
-
-
 
 function triggerSearch(v) {
   worker.postMessage(v);
