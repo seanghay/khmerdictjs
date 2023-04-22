@@ -8,6 +8,13 @@ const searchElement = document.querySelector('#search');
 const resultElement = document.querySelector('#result');
 const progressContainerElement = document.querySelector('#progress-container');
 
+function sanitizeDef(def) {
+  if (typeof def === 'string') {
+    return def.replace(/:$/, '')
+  }
+  return def;
+}
+
 const line = new ProgressBar.Line(progressContainerElement, {
   color: 'rgba(255,255,255,.6)',
   strokeWidth: 2,
@@ -89,7 +96,7 @@ worker.addEventListener('message', (msg) => {
     return `
       <li>
         <strong class="word">${item.subword || item.main || ""}${createPOS(item)}</strong>
-        <p>${item.definition}</p>
+        <p>${sanitizeDef(item.definition)}</p>
         ${el}
         ${noteEl}
         <p class="pronunciation">អានថា៖ <span class="white">${item.pronunciation}</span></p>
