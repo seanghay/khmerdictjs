@@ -66,7 +66,6 @@ worker.addEventListener('message', (msg) => {
   const millis = Math.round((time * 10000) / 1000) / 10000;
   if (suggests && suggests.length) {
     handleSamples(suggests)
-
   }
 
   if (data.length === 0) {
@@ -113,7 +112,7 @@ function triggerSearch(v) {
 function updateQuery(q) {
   const url = new URL(window.location);
   url.pathname = q;
-  window.history.pushState(null, '', url.toString());
+  window.history.replaceState(null, '', url.toString());
 }
 
 function getQuery() {
