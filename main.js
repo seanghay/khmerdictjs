@@ -1,3 +1,4 @@
+import { toKhmer } from 'khmernumber';
 import './main.css'
 import debounce from 'lodash.debounce'
 import ProgressBar from 'progressbar.js'
@@ -63,7 +64,7 @@ worker.addEventListener('message', (msg) => {
   }
 
   const { data, time, suggests } = msg.data;
-  const millis = Math.round((time * 10000) / 1000) / 10000;
+  const millis = toKhmer(`${Math.round(time)}`)
   if (suggests && suggests.length) {
     handleSamples(suggests)
   }
@@ -82,7 +83,7 @@ worker.addEventListener('message', (msg) => {
     return `<span class="pos">${item.part_of_speech || ""}</span>`
   }
 
-  resultElement.innerHTML = `<p class="stats">${millis} វិនាទី, រកឃើញ ${data.length} ពាក្យ</p>` + data.map((item) => {
+  resultElement.innerHTML = `<p class="stats">ចំណាយពេល ${millis} វិនាទី រកឃើញ ${toKhmer(data.length + "")} ពាក្យ</p>` + data.map((item) => {
     const el = item.example ? `<p class="example">${item.example || ""}</p>` : ""
     const noteEl = item.notes ? `<p class="pronunciation">ចំណាំ៖ <span class="white">${item.notes}</span></p>` : ''
     return `
