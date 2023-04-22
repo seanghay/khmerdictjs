@@ -83,7 +83,7 @@ worker.addEventListener('message', (msg) => {
     return `<span class="pos">${item.part_of_speech || ""}</span>`
   }
 
-  resultElement.innerHTML = `<p class="stats">ចំណាយពេល ${millis} វិនាទី រកឃើញ ${toKhmer(data.length + "")} ពាក្យ</p>` + data.map((item) => {
+  resultElement.innerHTML = `<p class="stats">ចំណាយពេល ${millis} មិល្លីវិនាទី រកឃើញ ${toKhmer(data.length + "")} ពាក្យ</p>` + data.map((item) => {
     const el = item.example ? `<p class="example">${item.example || ""}</p>` : ""
     const noteEl = item.notes ? `<p class="pronunciation">ចំណាំ៖ <span class="white">${item.notes}</span></p>` : ''
     return `
