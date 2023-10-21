@@ -95,7 +95,10 @@ worker.addEventListener('message', (msg) => {
     const noteEl = item.notes ? `<p class="pronunciation">ចំណាំ៖ <span class="white">${item.notes}</span></p>` : ''
     return `
       <li>
-        <strong class="word">${item.subword || item.main || ""}${createPOS(item)}</strong>
+        <div class="card-header">
+          <strong class="word">${item.subword || item.main || ""}${createPOS(item)}</strong>
+          <button onclick='copyToClipboard(${JSON.stringify(item.subword || item.main || "")})' class="clipboard-copy">ចម្លងពាក្យ</button>
+        </div> 
         <p>${sanitizeDef(item.definition)}</p>
         ${el}
         ${noteEl}
