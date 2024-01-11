@@ -9,12 +9,14 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "nodemon": "^3.0.2",
     "vite": "^4.0.0"
   },
   "dependencies": {
     "@zip.js/zip.js": "^2.6.61",
     "adm-zip": "^0.5.10",
     "better-sqlite3": "^8.0.1",
+    "canvas": "^2.11.2",
     "flexsearch": "^0.7.31",
     "fuse.js": "^6.6.2",
     "khmernumber": "^0.1.0",

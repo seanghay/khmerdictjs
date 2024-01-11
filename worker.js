@@ -1,9 +1,12 @@
 import { BlobReader, TextWriter, ZipReader } from "@zip.js/zip.js";
 import dbUrl from './assets/db.json.zip';
 import MiniSearch from 'minisearch'
+import { createPictureCard } from './picture.js'
 
+let appIcon = null;
 let _minisearch;
 let _words = [];
+let _wordsMap = new Map();
 
 async function downloadFileBlob(url, progress = () => { }) {
   const response = await fetch(url);
@@ -59,10 +62,11 @@ async function main() {
         totalProgress()
       }
     })
-    console.timeEnd('decompress')
-    console.time('parse')
+    console.timeEnd('decompress');
+    console.time('parse');
     const items = JSON.parse(json).map((item, id) => ({ ...item, id }));
     _words = items;
+    _wordsMap = new Map(items.map(item => [item.id, item]));
 
     postMessage({
       sampleItems: createSampleItems(items),
@@ -82,7 +86,7 @@ async function main() {
         boost: { main: 2, subword: 2 },
         fuzzy: .3
       }
-    })
+    });
 
     minisearch.addAll(items);
     console.timeEnd('index')
@@ -90,14 +94,58 @@ async function main() {
 
     postMessage("READY")
     percent3 += 33.33 / 2;
-    totalProgress()
-
+    totalProgress();
   }
 }
 
 main()
 
-addEventListener('message', (msg) => {
+async function loadImage(url) {
+  const res = await fetch(url);
+  const blob = await res.blob();
+  return createImageBitmap(blob);
+}
+
+
+function sanitizeDef(def) {
+  if (typeof def === 'string') {
+    return def.replace(/:$/, '')
+  }
+  return def;
+}
+
+addEventListener('message', async (msg) => {
+
+  if (typeof msg.data === 'string' && msg.data.startsWith("render:")) {
+    const id = +msg.data.split(":")[1];
+
+    if (!_wordsMap.has(id)) return;
+
+    if (appIcon == null) {
+      appIcon = await loadImage('/apple-icon.png')
+    }
+
+    const item = _wordsMap.get(id);
+    const word = item.main || item.subword;
+    const def = (item.definition);
+    const canvas = createPictureCard(appIcon, {
+      pronunciation: `អានថា៖ ${item.pronunciation}`,
+      pos: item.part_of_speech,
+      definition: item.example ? def + "\n" + item.example : def,
+      word,
+      url: `khmerdict.com/${word}`
+    });
+
+    canvas.convertToBlob({ type: "image/png" }).then(blob => {
+      self.postMessage({
+        name: "file_download",
+        url: URL.createObjectURL(blob),
+        filename: `${word}-khmerdict.png`
+      })
+    });
+    return;
+  }
+
   if (!_minisearch) return
   if (!msg.data && _words && _words.length > 0) {
     postMessage({
@@ -120,7 +168,6 @@ addEventListener('message', (msg) => {
     data,
     suggests: [...new Set(suggests.flatMap(i => i.terms))].slice(1)
   });
-
 })
 
 

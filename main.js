@@ -1,7 +1,7 @@
 import { toKhmer } from 'khmernumber';
-import './main.css'
-import debounce from 'lodash.debounce'
-import ProgressBar from 'progressbar.js'
+import './main.css';
+import debounce from 'lodash.debounce';
+import ProgressBar from 'progressbar.js';
 
 const sampleListElement = document.querySelector('#sample-list');
 const searchElement = document.querySelector('#search');
@@ -27,12 +27,25 @@ const worker = new Worker(new URL("./worker.js", import.meta.url), {
   type: "module"
 })
 
+window.downloadImage = id => {
+  worker.postMessage(`render:${id}`)
+}
+
 worker.addEventListener('message', (msg) => {
+
+  if (msg.data && typeof msg.data.name === 'string' && msg.data.name === 'file_download') {
+    const el = document.createElement("a")
+    el.href = msg.data.url;
+    el.download = msg.data.filename;
+    el.click();
+    URL.revokeObjectURL(msg.data.url);
+    return;
+
+  }
 
   const handleSamples = samples => {
     sampleListElement.innerHTML = '';
 
-  
     for (const sample of samples) {
       const button = document.createElement('button');
       button.textContent = sample;
@@ -42,7 +55,7 @@ worker.addEventListener('message', (msg) => {
         triggerSearch(sample)
         updateQuery(sample)
       })
-    
+
       sampleListElement.appendChild(button)
     }
   }
@@ -97,8 +110,10 @@ worker.addEventListener('message', (msg) => {
       <li>
         <div class="card-header">
           <strong class="word">${item.subword || item.main || ""}${createPOS(item)}</strong>
+          <button onclick='downloadImage(${item.id})' style="margin-right: 8px" class="clipboard-copy">ទាញយករូប</button>  
           <button onclick='copyToClipboard(${JSON.stringify(item.subword || item.main || "")})' class="clipboard-copy">ចម្លងពាក្យ</button>
         </div> 
+
         <p>${sanitizeDef(item.definition)}</p>
         ${el}
         ${noteEl}
@@ -106,6 +121,7 @@ worker.addEventListener('message', (msg) => {
       </li>
     `;
   }).join('')
+
 
 });
 
