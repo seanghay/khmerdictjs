@@ -126,7 +126,7 @@ addEventListener('message', async (msg) => {
     }
 
     const item = _wordsMap.get(id);
-    const word = item.main || item.subword;
+    const word = item.subword || item.main;
     const def = (item.definition);
     const canvas = createPictureCard(appIcon, {
       pronunciation: `អានថា៖ ${item.pronunciation}`,
