@@ -1,5 +1,11 @@
 
-const segmenter = new Intl.Segmenter("km", { granularity: "word" });
+let segmenter;
+
+if ('Intl' in self && 'Segmenter' in Intl) {
+  segmenter = new Intl.Segmenter("km", { granularity: "word" });
+}
+
+console.log({segmenter})
 
 export function createPictureCard(icon, {
   word = "word",

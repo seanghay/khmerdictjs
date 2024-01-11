@@ -8,6 +8,8 @@ const searchElement = document.querySelector('#search');
 const resultElement = document.querySelector('#result');
 const progressContainerElement = document.querySelector('#progress-container');
 
+const IS_SEGMENTER_AVAILABLE = 'Intl' in self && 'Segmenter' in Intl
+
 function sanitizeDef(def) {
   if (typeof def === 'string') {
     return def.replace(/:$/, '')
@@ -105,12 +107,17 @@ worker.addEventListener('message', (msg) => {
 
   resultElement.innerHTML = `<p class="stats">ចំណាយពេល ${millis} មិល្លីវិនាទី រកឃើញ ${toKhmer(data.length + "")} ពាក្យ</p>` + data.map((item) => {
     const el = item.example ? `<p class="example">${item.example || ""}</p>` : ""
-    const noteEl = item.notes ? `<p class="pronunciation">ចំណាំ៖ <span class="white">${item.notes}</span></p>` : ''
+    const noteEl = item.notes ? `<p class="pronunciation">ចំណាំ៖ <span class="white">${item.notes}</span></p>` : '';
+
+    const downloadElement = IS_SEGMENTER_AVAILABLE ?
+      `<button onclick='downloadImage(${item.id})' style="margin-right: 8px" class="clipboard-copy">ទាញយករូប</button>` :
+      ''
+
     return `
       <li>
         <div class="card-header">
           <strong class="word">${item.subword || item.main || ""}${createPOS(item)}</strong>
-          <button onclick='downloadImage(${item.id})' style="margin-right: 8px" class="clipboard-copy">ទាញយករូប</button>  
+          ${downloadElement}
           <button onclick='copyToClipboard(${JSON.stringify(item.subword || item.main || "")})' class="clipboard-copy">ចម្លងពាក្យ</button>
         </div> 
 
