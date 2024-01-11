@@ -88,23 +88,23 @@ function drawWord(canvas, ctx, text, text1) {
   ctx.fillStyle = 'white';
   ctx.fillText(text, 44, y);
 
-  const text1OffsetX = 10
+  const text1OffsetX = 10;
 
   if (text1) {
     ctx.font = '500 24pt Kantumruy Pro, sans-serif'
     const m1 = ctx.measureText(text1);
-  
+
     ctx.fillStyle = rgba(255, 255, 255, .1);
-    ctx.fillRect(text1OffsetX + m.width + 44, y, m1.width + 20, 40)
-  
+    ctx.fillRect(text1OffsetX + m.width + 44, y - 10, m1.width + 20, 50)
+
     ctx.fillStyle = rgba(255, 255, 255, .6);
-    ctx.fillText(text1, text1OffsetX + m.width + 44 + 10, y + 2);  
+    ctx.fillText(text1, text1OffsetX + m.width + 44 + 10, y + 2);
   }
 }
 
 function drawPronunciation(canvas, ctx, text) {
   ctx.save();
-  const y = 44 + 72 + 44 + 44 + 8;
+  const y = 44 + 72 + 44 + 44 ;
 
   ctx.font = '500 20pt Kantumruy Pro, sans-serif';
   const m = ctx.measureText(text);
@@ -120,10 +120,10 @@ function drawPronunciation(canvas, ctx, text) {
 function drawDefinition(canvas, ctx, text) {
   const s = segmenter.segment(text)
   const segments = [...s].map(item => item.segment);
-  const y = 44 + 72 + 44 + 44 + 72;
-
+  const y = 44 + 72 + 44 + 44 + 56;
+  
   ctx.font = '400 20pt Kantumruy Pro, sans-serif';
-
+  
   let offsetX = 0;
   let offsetY = 0;
 
@@ -134,19 +134,20 @@ function drawDefinition(canvas, ctx, text) {
 
     if (segment === '\n' || (offsetX + metrics.width >= canvas.width - 44 * 2)) {
       offsetX = 0;
-      offsetY += 44;
+      offsetY += 40;
     }
 
     if (segment === '\n') {
-      ctx.fillStyle = "#FF9843"
-      ctx.font = '400 20pt Kantumruy Pro, sans-serif';
-      offsetY += 14
+      ctx.fillStyle = rgba(255, 255, 255, .6)
+      ctx.font = 'italic 400 17pt Kantumruy Pro, sans-serif';
+      offsetY += 10
     }
 
     if (offsetX === 0 && segment.trim().length === 0) continue;
     ctx.fillText(segment, 44 + offsetX, y + offsetY);
     offsetX += metrics.width;
   }
+
 
 }
 
