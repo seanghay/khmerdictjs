@@ -104,7 +104,7 @@ function drawWord(canvas, ctx, text, text1) {
 
 function drawPronunciation(canvas, ctx, text) {
   ctx.save();
-  const y = 44 + 72 + 44 + 44 ;
+  const y = 44 + 72 + 44 + 44;
 
   ctx.font = '500 20pt Kantumruy Pro, sans-serif';
   const m = ctx.measureText(text);
@@ -121,33 +121,48 @@ function drawDefinition(canvas, ctx, text) {
   const s = segmenter.segment(text)
   const segments = [...s].map(item => item.segment);
   const y = 44 + 72 + 44 + 44 + 56;
-  
-  ctx.font = '400 20pt Kantumruy Pro, sans-serif';
-  
-  let offsetX = 0;
-  let offsetY = 0;
 
-  ctx.fillStyle = rgba(255, 255, 255, .9);
+  function render(draw, drawExample) {
 
-  for (const segment of segments) {
-    const metrics = ctx.measureText(segment);
+    ctx.font = '400 20pt Kantumruy Pro, sans-serif';
 
-    if (segment === '\n' || (offsetX + metrics.width >= canvas.width - 44 * 2)) {
-      offsetX = 0;
-      offsetY += 40;
+    let offsetX = 0;
+    let offsetY = 0;
+
+    ctx.fillStyle = rgba(255, 255, 255, .9);
+    for (const segment of segments) {
+      const metrics = ctx.measureText(segment);
+
+      if (segment === '\n' || (offsetX + metrics.width >= canvas.width - 44 * 2)) {
+        offsetX = 0;
+        offsetY += 40;
+      }
+
+      if (segment === '\n') {
+        ctx.fillStyle = rgba(255, 255, 255, .6)
+        ctx.font = 'italic 400 17pt Kantumruy Pro, sans-serif';
+        offsetY += 10
+        if (!drawExample) {
+          break;
+        }
+      }
+
+      if (offsetX === 0 && segment.trim().length === 0) continue;
+      if (draw) {
+        ctx.fillText(segment, 44 + offsetX, y + offsetY);
+      }
+      offsetX += metrics.width;
     }
 
-    if (segment === '\n') {
-      ctx.fillStyle = rgba(255, 255, 255, .6)
-      ctx.font = 'italic 400 17pt Kantumruy Pro, sans-serif';
-      offsetY += 10
-    }
-
-    if (offsetX === 0 && segment.trim().length === 0) continue;
-    ctx.fillText(segment, 44 + offsetX, y + offsetY);
-    offsetX += metrics.width;
+    return { offsetY }
   }
 
+  const { offsetY } = render(false, true);
+  if (offsetY + y > canvas.height - 44) {
+    render(true, false);
+    return
+  }
 
+  render(true, true);
 }
 
