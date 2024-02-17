@@ -15,8 +15,7 @@ window.synthesize = async function (e, text) {
   }
   el.disabled = true;
   try {
-    const _AudioContext = window.AudioContext || window.webkitAudioContext;
-    const context = new _AudioContext();
+    const context = window.audioContext;
     const audioUrl = new URL("https://klea-js.fly.dev/" + text)
     const response = await fetch(audioUrl);
     const buffer = await response.arrayBuffer();
