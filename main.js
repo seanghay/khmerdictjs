@@ -24,7 +24,15 @@ window.synthesize = async function (e, text) {
     const source = context.createBufferSource();
     source.buffer = audioBuffer;
     source.connect(context.destination);
-    source.start();
+    
+    if (source.start) {
+      source.start(0);
+    } else if (source.play) {
+      source.play(0);
+    } else if (source.noteOn) {
+      source.noteOn(0);
+    }
+
   } catch (e) {
     console.error(e);
   } finally {
