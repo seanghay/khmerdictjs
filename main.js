@@ -152,8 +152,10 @@ worker.addEventListener('message', (msg) => {
       `<button onclick='downloadImage(${item.id})' style="margin-right: 8px" class="clipboard-copy">ទាញយករូប</button>` :
       ''
 
+    const isExact = searchElement.value === (item.subword || item.main || "")
+
     return `
-      <li>
+      <li ${isExact ? 'class="exact"' : ""}>
         <div class="card-header">
           <strong class="word">${item.subword || item.main || ""}${createPOS(item)}</strong>
           ${downloadElement}

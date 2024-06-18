@@ -126,11 +126,18 @@ li {
   background-color: rgba(255, 255, 255, 0.05);
 }
 
+li.exact {
+  border: 2px solid rgba(255, 255, 255, .25);
+  background-color: rgba(255, 255, 255, 0.1);
+}
 
 li:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
+li.exact:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
 
 .pos {
   vertical-align: middle;
