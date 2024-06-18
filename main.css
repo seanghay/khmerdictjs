@@ -1,5 +1,6 @@
 :root {
   color-scheme: dark;
+  background-color: #1A2130;
 }
 
 
@@ -7,10 +8,40 @@ html,
 body {
   padding: 0;
   margin: 0;
-  background-color: #1A2130;
+
   color: white;
   font-family: "Kantumruy Pro", sans-serif;
   line-height: 22px;
+  padding-bottom: 3rem;
+  z-index: 1;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  z-index: -1;
+  background-image: linear-gradient(-225deg, #1A2130 0%, #8481ae 400%);
+  animation: roller 8s infinite;
+  background-size: 200% 200%;
+}
+
+
+@keyframes roller {
+
+  0%,
+  100% {
+    background-position: 10% 0%
+  }
+
+  50% {
+
+    background-position: 91% 100%
+  }
 }
 
 body {
@@ -119,6 +150,7 @@ li:hover {
   display: block;
   font-size: 24px;
   margin: 0.4em 0;
+  font-weight: 500;
 }
 
 #sample-list {
@@ -167,7 +199,7 @@ li:hover {
 }
 
 .app-name {
-  font-weight: 600;
+  font-weight: 300;
   text-align: center;
   padding: 0;
   margin: 0;
@@ -175,7 +207,7 @@ li:hover {
 }
 
 p.empty {
-  font-weight: bold;
+  font-weight: 600;
   text-align: center;
   padding: 0.8em 0.4em;
   background-color: rgba(255, 255, 255, 0.05);
@@ -192,12 +224,14 @@ p.empty {
   text-align: center;
   padding-bottom: 1em;
   color: rgba(255, 255, 255, 0.6);
-  font-size: 1em;
+  font-size: .95em;
+  padding-top: 0;
+  margin-top: .6rem;
 }
 
 #search {
   display: none;
-  font-weight: bold;
+  font-weight: 600;
   font-size: 1.4em;
 }
 
