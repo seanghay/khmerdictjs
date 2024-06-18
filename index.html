@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<meta name="viewport" content="width=device-width,initial-scale=1" />
 	<meta name="description" content="Fast and offline Khmer dictionary" />
-	<title>វចនានុក្រមខ្មែរ</title>
+	<title>វចនានុក្រមខ្មែរ - Khmer Dictionary</title>
 	<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png" />
 	<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png" />
 	<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png" />
@@ -84,14 +84,43 @@
 
 <body>
 	<div id="app">
-		<h1 class="app-name">វចនានុក្រមខ្មែរ</h1>
-		<p class="app-description">រហ័ស និងងាយស្រួលប្រើប្រាស់</p>
-		<input disabled type="text" id="search" placeholder="ស្វែងរកពាក្យ" />
-		<div id="progress-container"></div>
-		<div id="sample-list"></div>
-		<ul id="result"></ul>
+		<h2 class="app-name">វចនានុក្រមខ្មែរ</h1>
+			<p class="app-description">រហ័ស គ្មានពាណិជ្ជកម្ម និងងាយស្រួលប្រើប្រាស់</p>
+			<input disabled type="text" id="search" placeholder="ស្វែងរកពាក្យ" />
+			<div id="progress-container"></div>
+			<div id="sample-list"></div>
+			<ul id="result"></ul>
+	</div>
+	<div class="support-card-layout">
+		<div class="support-card">
+			<div class="support-card-title">🙏 ឧបត្ថម្ភពួកយើងតាមរយៈ</div>
+			<a href="https://pay.ababank.com/QJ5pAdGHsENGkP6b8">
+				<img class="payment-icon" src="/aba.jpg" width="32" alt="">
+			</a>
+			<a
+				href="https://acledabank.com.kh/acleda?payment_data=qWY5B2SAUfIhLblxzOtfu8yRyA1YGYQ90srEOvcavYL2TEi4jfP6e4RN/IrDJZIKt3rVWF0R5swR7hJMaJ7n5yiK+TiT59kze6iouraodhYKjWf/31r3W5jN5iQwg38WUQpFW0yvggGerqyZyC3TwaabPON22FvAWWY1hHnWvw3W45cM9T0LPWe97VfiXzoiVzDgVPO5JrVkMod2LG3QJWHxg6shpmFRVQE82HAJaho=&key=khqr">
+				<img class="payment-icon" src="/acleda.jpg" width="32" alt="">
+			</a>
+		</div>
 	</div>
 	<script type="module" src="/main.js"></script>
+	<script type="application/ld+json">
+    {
+      "@context" : "https://schema.org",
+      "@type" : "WebSite",
+      "name" : "KhmerDict",
+      "alternateName" : "វចនានុក្រមខ្មែរ",
+      "url" : "https://khmerdict.com/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://khmerdict.com/{search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+  </script>
 </body>
 
 </html>

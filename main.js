@@ -10,7 +10,7 @@ window.synthesize = async function (e, text) {
   text = text.replace(/[^\u1780-\u17d2]+/, '')
   if (!text) return;
   let el = e.target;
-  while(!(el instanceof HTMLButtonElement)) {
+  while (!(el instanceof HTMLButtonElement)) {
     el = el.parentElement;
   }
   el.disabled = true;
@@ -23,7 +23,7 @@ window.synthesize = async function (e, text) {
     const source = context.createBufferSource();
     source.buffer = audioBuffer;
     source.connect(context.destination);
-    
+
     if (source.start) {
       source.start(0);
     } else if (source.play) {
@@ -35,7 +35,7 @@ window.synthesize = async function (e, text) {
   } catch (e) {
     console.error(e);
   } finally {
-  el.disabled = false;
+    el.disabled = false;
   }
 }
 
@@ -54,11 +54,14 @@ function sanitizeDef(def) {
 }
 
 const line = new ProgressBar.Line(progressContainerElement, {
-  color: 'rgba(255,255,255,.6)',
-  strokeWidth: 2,
-  trailWidth: 2,
+  color: 'rgba(255,255,255,.3)',
+  strokeWidth: 1,
+  trailWidth: 1,
   trailColor: "rgba(255,255,255, .1)",
   easing: 'easeInOut',
+  svgStyle: {
+    borderRadius: "2rem"
+  }
 })
 
 const worker = new Worker(new URL("./worker.js", import.meta.url), {

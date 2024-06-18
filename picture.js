@@ -34,7 +34,7 @@ export function createPictureCard(icon, {
 
 function drawBackground(canvas, ctx) {
   ctx.textBaseline = 'top';
-  ctx.fillStyle = '#2A2F4F';
+  ctx.fillStyle = '#1A2130';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 
