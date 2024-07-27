@@ -354,3 +354,19 @@ button.button:disabled {
 .support-card a {
   display: flex;
 }
+
+#keyman-toggle {
+  border: none;
+  align-self: flex-start;
+  background-color: rgba(255, 189, 66, 0.1);
+  color: rgba(255, 189, 66, .8);
+  border-radius: 1rem;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: .9rem;
+  padding: .3rem .6rem;
+  margin-bottom: .4rem;
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+}

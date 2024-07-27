@@ -43,6 +43,35 @@
 	<link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&display=swap"
 		rel="stylesheet">
 
+	<script src="/resource/keymanweb.js"></script>
+	<script>
+		addEventListener("DOMContentLoaded", () => {
+			const $search = document.querySelector("#search");
+
+			keyman.init({
+				ui: 'button',
+				resources: '/resource/',
+				keyboards: '/keyboards/',
+				attachType: 'manual',
+				setActiveOnRegister: false
+			}).then(async () => {
+				await keyman.addKeyboards("@en");
+				await keyman.addKeyboards("khmer_angkor");
+				keyman.setActiveKeyboard("Keyboard_khmer_angkor", "km");
+			});
+		});
+
+		function enableKeyman() {
+			const $search = document.querySelector("#search");
+			keyman.attachToControl($search);
+			$search.classList.remove("keymanweb-font");
+			$search.focus();
+			const $el = document.querySelector("#keyman-toggle");
+			console.log($el.parentNode.removeChild($el));
+		}
+
+	</script>
+
 	<script>
 		// Fix iOS Audio Context by Blake Kus https://gist.github.com/kus/3f01d60569eeadefe3a1
 		// MIT license
@@ -94,6 +123,7 @@
 			}, 2000)
 		}
 	</script>
+
 </head>
 
 <body>
@@ -101,6 +131,13 @@
 		<img src="/apple-icon-144x144.png" width="44" alt="" style="margin: 0 auto; margin-top: .4rem;">
 		<h2 class="app-name">វចនានុក្រមខ្មែរ</h1>
 			<p class="app-description">រហ័ស គ្មានពាណិជ្ជកម្ម និងងាយស្រួលប្រើប្រាស់</p>
+			<button id="keyman-toggle" onclick="enableKeyman()">
+				<img width="20" height="20"
+					src="data:image/webp;base64,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"
+					alt="" />
+				<span>បើកការប្រើប្រាស់ក្ដារចុច Keyman</span>
+			</button>
+
 			<input disabled type="text" id="search" placeholder="ស្វែងរកពាក្យ" />
 			<div id="progress-container"></div>
 			<div id="sample-list"></div>
