@@ -1,5 +1,5 @@
 import { BlobReader, TextWriter, ZipReader } from "@zip.js/zip.js";
-import dbUrl from "./assets/db2.json.zip";
+import dbUrl from "./assets/db3.json.zip";
 import MiniSearch from "minisearch";
 import { createPictureCard } from "./picture.js";
 import localforage from "localforage";
@@ -45,8 +45,8 @@ async function main() {
 	};
 
 	// handle cache hits
-
-	const cachedApp = await localforage.getItem("app");
+	const CACHE_KEY = "app-v1";
+	const cachedApp = await localforage.getItem(CACHE_KEY);
 	if (cachedApp != null) {
 		postMessage("READY");
 		console.time("index");
@@ -119,7 +119,7 @@ async function main() {
 		const minisearch = new MiniSearch(indexOptions);
 		minisearch.addAll(items);
 
-		await localforage.setItem("app", {
+		await localforage.setItem(CACHE_KEY, {
 			index: minisearch.toJSON(),
 			words: _words,
 			wordsEntries: Array.from(_wordsMap.entries()),
