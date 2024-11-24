@@ -240,6 +240,11 @@ p.empty {
   display: none;
   font-weight: 600;
   font-size: 1.4em;
+  position: sticky;
+  background-color: rgba(49, 54, 71, .9);
+  backdrop-filter: blur(10px);
+  top: 6px;
+
 }
 
 #progress-container {
