@@ -146,25 +146,22 @@ worker.addEventListener("message", (msg) => {
 		return `<span class="pos">${item.part_of_speech || ""}</span>`;
 	};
 
-	resultElement.innerHTML =
-		`<p class="stats">ចំណាយពេល ${millis} មិល្លីវិនាទី រកឃើញ ${toKhmer(data.length + "")} ពាក្យ</p>` +
-		data
-			.map((item) => {
-				const el = item.example
-					? `<p class="example">${item.example || ""}</p>`
-					: "";
-				const noteEl = item.notes
-					? `<p class="pronunciation">ចំណាំ៖ <span class="white">${item.notes}</span></p>`
-					: "";
+	resultElement.innerHTML = data
+		.map((item) => {
+			const el = item.example
+				? `<p class="example">${item.example || ""}</p>`
+				: "";
+			const noteEl = item.notes
+				? `<p class="pronunciation">ចំណាំ៖ <span class="white">${item.notes}</span></p>`
+				: "";
 
-				const downloadElement = IS_SEGMENTER_AVAILABLE
-					? `<button onclick='downloadImage(${item.id})' style="margin-right: 8px" class="clipboard-copy">ទាញយករូប</button>`
-					: "";
+			const downloadElement = IS_SEGMENTER_AVAILABLE
+				? `<button onclick='downloadImage(${item.id})' style="margin-right: 8px" class="clipboard-copy">ទាញយករូប</button>`
+				: "";
 
-				const isExact =
-					searchElement.value === (item.subword || item.main || "");
+			const isExact = searchElement.value === (item.subword || item.main || "");
 
-				return `
+			return `
       <li ${isExact ? 'class="exact"' : ""}>
         <div class="card-header">
           <strong class="word">${item.subword || item.main || ""}${createPOS(item)}</strong>
@@ -187,8 +184,8 @@ worker.addEventListener("message", (msg) => {
 
 
     `;
-			})
-			.join("");
+		})
+		.join("");
 });
 
 searchElement.value = getQuery();

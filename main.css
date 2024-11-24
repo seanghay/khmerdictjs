@@ -1,3 +1,63 @@
+@font-face {
+  font-family: 'MiSansKhmer';
+  font-weight: bold;
+  src: url('/MiSansKhmer-Bold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'MiSansKhmer';
+  font-weight: 600;
+  src: url('/MiSansKhmer-Demibold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'MiSansKhmer';
+  font-weight: 200;
+  src: url('/MiSansKhmer-ExtraLight.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'MiSansKhmer';
+  font-weight: 900;
+  src: url('/MiSansKhmer-Heavy.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'MiSansKhmer';
+  font-weight: 300;
+  src: url('/MiSansKhmer-Light.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'MiSansKhmer';
+  font-weight: 500;
+  src: url('/MiSansKhmer-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'MiSansKhmer';
+  font-weight: normal;
+  src: url('/MiSansKhmer-Normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'MiSansKhmer';
+  font-weight: 400;
+  src: url('/MiSansKhmer-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'MiSansKhmer';
+  font-weight: 600;
+  src: url('/MiSansKhmer-Semibold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'MiSansKhmer';
+  font-weight: 100;
+  src: url('/MiSansKhmer-Thin.woff2') format('woff2');
+}
+
 :root {
   color-scheme: dark;
   background-color: #1A2130;
@@ -10,7 +70,7 @@ body {
   margin: 0;
 
   color: white;
-  font-family: "Kantumruy Pro", sans-serif;
+  font-family: MiSansKhmer, Inter, sans-serif;
   line-height: 22px;
   padding-bottom: 3rem;
   z-index: 1;
@@ -375,4 +435,28 @@ button.button:disabled {
   display: flex;
   align-items: center;
   gap: .4rem;
+}
+
+.font-footnote {
+  border-top: 2px solid rgba(255, 255, 255, .1);
+  padding-top: .6rem;
+  font-size: .85rem;
+  display: flex;
+  flex-direction: row;
+  gap: .4rem;
+  justify-content: center;
+}
+
+.font-footnote a {
+  color: rgba(255, 255, 255, .4);
+  text-decoration: none;
+}
+
+.font-footnote a:hover {
+  color: rgba(255, 255, 255, .7);
+}
+
+.font-label {
+  color: rgba(255, 255, 255, .75);
+  font-weight: 600;
 }
