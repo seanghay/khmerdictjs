@@ -26,12 +26,18 @@ importers:
       fuse.js:
         specifier: ^6.6.2
         version: 6.6.2
+      khmer-normalizer:
+        specifier: ^1.0.2
+        version: 1.0.2
       khmernumber:
         specifier: ^0.1.0
         version: 0.1.0
       knex:
         specifier: ^2.3.0
         version: 2.5.1(better-sqlite3@8.7.0)
+      localforage:
+        specifier: ^1.10.0
+        version: 1.10.0
       lodash.debounce:
         specifier: ^4.0.8
         version: 4.0.8
@@ -1365,6 +1371,9 @@ packages:
   ignore-by-default@1.0.1:
     resolution: {integrity: sha512-Ius2VYcGNk7T90CppJqcIkS5ooHUZyIQK+ClZfMfMNFEF9VSE73Fq+906u/CWu92x4gzZMWOwfFYckPObzdEbA==}
 
+  immediate@3.0.6:
+    resolution: {integrity: sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ==}
+
   inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
     deprecated: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
@@ -1517,6 +1526,10 @@ packages:
     resolution: {integrity: sha512-p/nXbhSEcu3pZRdkW1OfJhpsVtW1gd4Wa1fnQc9YLiTfAjn0312eMKimbdIQzuZl9aa9xUGaRlP9T/CJE/ditQ==}
     engines: {node: '>=0.10.0'}
 
+  khmer-normalizer@1.0.2:
+    resolution: {integrity: sha512-E4wZdl5ReDqbxCl21LXb+hqEu1qnPORZvrEk6v/mEs9SjtcgiygA30IyQ+JiRdvVSh4Kgaq5IdEUb9IwE4Sqog==}
+    hasBin: true
+
   khmernumber@0.1.0:
     resolution: {integrity: sha512-fhkAl+3U7RRcmuCaA5v8NIEaV4nFC5xcu3m+rQg0O3FC0p9StBHHgXC5uvi6wIeId8CsUnNP61CGnknpXGLJAA==}
 
@@ -1551,6 +1564,12 @@ packages:
   leven@3.1.0:
     resolution: {integrity: sha512-qsda+H8jTaUaN/x5vzW2rzc+8Rw4TAQ/4KjB46IwK5VH+IlVeeeje/EoZRpiXvIqjFgK84QffqPztGI3VBLG1A==}
     engines: {node: '>=6'}
+
+  lie@3.1.1:
+    resolution: {integrity: sha512-RiNhHysUjhrDQntfYSfY4MU24coXXdEOgw9WGcKHNeEwffDYbF//u87M1EWaMGzuFoSbqW0C9C6lEEhDOAswfw==}
+
+  localforage@1.10.0:
+    resolution: {integrity: sha512-14/H1aX7hzBBmmh7sGPd+AOMkkIrHM3Z1PAyGgZigA1H1p5O5ANnMyWzvpAETtG68/dC4pC0ncy3+PPGzXZHPg==}
 
   lodash.debounce@4.0.8:
     resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
@@ -3724,6 +3743,8 @@ snapshots:
 
   ignore-by-default@1.0.1: {}
 
+  immediate@3.0.6: {}
+
   inflight@1.0.6:
     dependencies:
       once: 1.4.0
@@ -3857,6 +3878,8 @@ snapshots:
 
   jsonpointer@5.0.1: {}
 
+  khmer-normalizer@1.0.2: {}
+
   khmernumber@0.1.0: {}
 
   knex@2.5.1(better-sqlite3@8.7.0):
@@ -3881,6 +3904,14 @@ snapshots:
       - supports-color
 
   leven@3.1.0: {}
+
+  lie@3.1.1:
+    dependencies:
+      immediate: 3.0.6
+
+  localforage@1.10.0:
+    dependencies:
+      lie: 3.1.1
 
   lodash.debounce@4.0.8: {}
 
