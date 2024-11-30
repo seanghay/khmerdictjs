@@ -123,6 +123,8 @@ worker.addEventListener("message", (msg) => {
 		if (searchElement.value) {
 			triggerSearch(searchElement.value);
 		}
+
+		searchElement.focus();
 		return;
 	}
 

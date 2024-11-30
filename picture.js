@@ -6,8 +6,8 @@ if ("Intl" in self && "Segmenter" in Intl) {
 
 if ("FontFace" in self) {
 	const fontFace = new FontFace(
-		"MiSansKhmer",
-		"url(/MiSansKhmer-Normal.woff2) format('woff2')",
+		"InterKhmer",
+		"url(/InterKhmerLooped[wght].woff2) format('woff2')",
 	);
 
 	fontFace.load();
@@ -24,7 +24,7 @@ export function createPictureCard(
 		pos = "pos",
 	} = {},
 ) {
-	const canvas = new OffscreenCanvas(1080, 720);
+	const canvas = new OffscreenCanvas(1080, 1080);
 	const ctx = canvas.getContext("2d");
 
 	drawBackground(canvas, ctx);
@@ -54,21 +54,21 @@ function drawIcon(canvas, ctx, icon) {
 
 function drawTitle(canvas, ctx) {
 	const text = "វចនានុក្រមខ្មែរ";
-	ctx.font = "600 28pt MiSansKhmer, sans-serif";
+	ctx.font = "600 28pt InterKhmer, sans-serif";
 	ctx.fillStyle = "white";
 	ctx.fillText(text, 44 + 72 + 44, 44);
 }
 
 function drawSubtitle(canvas, ctx) {
 	const text = "រហ័ស និងងាយស្រួលប្រើប្រាស់";
-	ctx.font = "500 18pt MiSansKhmer, sans-serif";
+	ctx.font = "500 18pt InterKhmer, sans-serif";
 	ctx.fillStyle = rgba(255, 255, 255, 0.6);
 	ctx.fillText(text, 44 + 72 + 44, 44 + 50);
 }
 
 function drawDomain(canvas, ctx, text) {
 	ctx.fillStyle = rgba(255, 255, 255, 0.8);
-	ctx.font = "500 18pt MiSansKhmer, sans-serif";
+	ctx.font = "500 18pt InterKhmer, sans-serif";
 	const m = ctx.measureText(text);
 	ctx.fillText(text, canvas.width - m.width - 44, 44);
 }
@@ -97,7 +97,7 @@ function rgba(r, g, b, a) {
 function drawWord(canvas, ctx, text, text1) {
 	const y = 44 + 72 + 44 + 44;
 
-	ctx.font = "600 28pt MiSansKhmer, sans-serif";
+	ctx.font = "600 28pt InterKhmer, sans-serif";
 	const m = ctx.measureText(text);
 	ctx.fillStyle = "white";
 	ctx.fillText(text, 44, y);
@@ -105,7 +105,7 @@ function drawWord(canvas, ctx, text, text1) {
 	const text1OffsetX = 10;
 
 	if (text1) {
-		ctx.font = "500 24pt MiSansKhmer, sans-serif";
+		ctx.font = "500 24pt InterKhmer, sans-serif";
 		const m1 = ctx.measureText(text1);
 
 		ctx.fillStyle = rgba(255, 255, 255, 0.1);
@@ -120,7 +120,7 @@ function drawPronunciation(canvas, ctx, text) {
 	ctx.save();
 	const y = 44 + 72 + 44 + 44;
 
-	ctx.font = "500 20pt MiSansKhmer, sans-serif";
+	ctx.font = "500 20pt InterKhmer, sans-serif";
 	const m = ctx.measureText(text);
 
 	ctx.fillStyle = rgba(255, 255, 255, 0.1);
@@ -137,7 +137,7 @@ function drawDefinition(canvas, ctx, text) {
 	const y = 44 + 72 + 44 + 44 + 56;
 
 	function render(draw, drawExample) {
-		ctx.font = "400 20pt MiSansKhmer, sans-serif";
+		ctx.font = "400 20pt InterKhmer, sans-serif";
 
 		let offsetX = 0;
 		let offsetY = 0;
@@ -156,7 +156,7 @@ function drawDefinition(canvas, ctx, text) {
 
 			if (segment === "\n") {
 				ctx.fillStyle = rgba(255, 255, 255, 0.6);
-				ctx.font = "italic 400 17pt MiSansKhmer, sans-serif";
+				ctx.font = "italic 400 17pt InterKhmer, sans-serif";
 				offsetY += 10;
 				if (!drawExample) {
 					break;

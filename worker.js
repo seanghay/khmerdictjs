@@ -163,11 +163,11 @@ addEventListener("message", async (msg) => {
 			url: `khmerdict.com/${word}`,
 		});
 
-		canvas.convertToBlob({ type: "image/png" }).then((blob) => {
+		canvas.convertToBlob({ type: "image/jpeg" }).then((blob) => {
 			self.postMessage({
 				name: "file_download",
 				url: URL.createObjectURL(blob),
-				filename: `${word}-khmerdict.png`,
+				filename: `${word}-khmerdict.jpg`,
 			});
 		});
 		return;
