@@ -9,7 +9,7 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,wasm,zip}'],
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,wasm,zip,woff2}'],
         maximumFileSizeToCacheInBytes: 5097152,
       },
       includeAssets: ['favicon.ico', 'apple-icon.png', 'masked-icon.svg'], 
