@@ -181,11 +181,7 @@ worker.addEventListener("message", (msg) => {
             <span>ស្ដាប់</span>
           </button>
         </div>
-      </li>
-
-
-
-    `;
+      </li>`;
 		})
 		.join("");
 });
@@ -200,8 +196,19 @@ searchElement.addEventListener(
 	}, 10),
 );
 
+const telemetry = debounce((q) => {
+	if (!q.trim()) return;
+	if ("sendBeacon" in navigator) {
+		navigator.sendBeacon(
+			"https://khmerdict-telemetry.floo.app/api/telemetry",
+			q,
+		);
+	}
+}, 700);
+
 function triggerSearch(v) {
 	worker.postMessage(v);
+	telemetry(v);
 }
 
 function updateQuery(q) {
